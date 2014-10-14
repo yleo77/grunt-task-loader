@@ -1,8 +1,14 @@
 {
-  "name": "grunt-loader",
+  "name": "grunt-task-loader",
   "version": "0.1.0",
-  "description": "A grunt plugin loader for Grunt.",
-  "keywords": ["grunt", "plugin", "loader", "autoload"],
+  "description": "A grunt task loader for Grunt.",
+  "keywords": [
+    "grunt",
+    "plugin",
+    "task",
+    "loader",
+    "autoload"
+  ],
   "license": "MIT",
   "devDependencies": {
     "chai": "*",
@@ -10,9 +16,22 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.8.0"
   },
-
+  "author": "yleo77",
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo 1"
-  }
+  },
+  "dependencies": {
+    "chai": "^1.9.2",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yleo77/grunt-task-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yleo77/grunt-task-loader/issues"
+  },
+  "homepage": "https://github.com/yleo77/grunt-task-loader"
 }

@@ -1,6 +1,6 @@
-# grunt-loader 
+# grunt-task-loader 
 
-A plugin loader for **Speed up Load Task** and **Autoload Task** for Grunt. 
+A task loader for **Speed up Load Task** and **Autoload Task** for Grunt. 
 
 In most case Gruntfile.js is looks like this.
 
@@ -32,13 +32,13 @@ reset           130ms  ▇▇ 2%
 Total 6.83s
 ```
 
-With **grunt-loader**, you can collapse that down to the following one-liner. it should looks like this:
+With **grunt-task-loader**, you can collapse that down to the following one-liner. it should looks like this:
 
 ```javascript
 // Gruntfile.js
 module.exports = function(grunt) {
     
-  require('grunt-loader')(grunt);
+  require('grunt-task-loader')(grunt);
   
   grunt.initConfig({
     //...
@@ -76,7 +76,7 @@ just put code into your Gruntfile.js
 ```
 // First argument: the grunt instance. **required**.
 // Second argument: {Object} options, Optional. If your task in a custom dir, you should set it.
-require('grunt-loader')(grunt, {
+require('grunt-task-loader')(grunt, {
   // customTasksDir: '__CUSTOM_DIR__'
 });
 ```

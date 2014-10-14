@@ -1,4 +1,6 @@
-# grunt-task-loader 
+# grunt-task-loader  
+
+[![Build Status](https://travis-ci.org/yleo77/grunt-task-loader.svg)](https://travis-ci.org/yleo77/grunt-task-loader)  [![NPM version](https://badge.fury.io/js/grunt-task-loader.svg)](http://badge.fury.io/js/grunt-task-loader)
 
 A task loader for **Speed up Load Task** and **Autoload Task** for Grunt. 
 
@@ -67,7 +69,9 @@ Total 318ms
 
 ## Install
 
-...
+```
+npm install grunt-task-loader --save-dev
+```
 
 ## Usage 
 

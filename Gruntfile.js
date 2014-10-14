@@ -1,8 +1,11 @@
 
 module.exports = function(grunt) {
 
+  require('./lib/index.js')(grunt, {
+    customTasksDir: 'test'
+  });
+
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
 
     jshint: {
       all: [
@@ -12,9 +15,7 @@ module.exports = function(grunt) {
         jshintrc: './.jshintrc'
       }
     }
-
   });
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'custom']);
 };

@@ -11,15 +11,12 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "chai": "*",
-    "mocha": "*",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.8.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
   },
-  "dependencies": {},
   "author": "yleo77",
   "main": "./lib/index.js",
   "scripts": {

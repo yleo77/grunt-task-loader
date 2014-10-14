@@ -85,6 +85,7 @@ require('grunt-task-loader')(grunt, {
 });
 ```
 
+If you wanna a live example, check **Gruntfile.js** out.
 
 ## License
 

@@ -1,0 +1,11 @@
+{
+    "laxbreak": true,
+    "laxcomma":true,
+    "undef": true,
+    "node": true,
+    "eqnull": true,
+    "expr":true,
+    "eqeqeq": false,
+    "globals": {"define": true }
+    
+}

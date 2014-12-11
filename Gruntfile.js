@@ -2,7 +2,12 @@
 module.exports = function(grunt) {
 
   require('./lib/index.js')(grunt, {
-    customTasksDir: 'test'
+    customTasksDir: 'test/',
+
+    mapping: {
+      taskA: 'ultraman/',
+      taskB: 'ultraman/frog.js'
+    }
   });
 
   grunt.initConfig({
@@ -17,5 +22,5 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint', 'custom']);
+  grunt.registerTask('default', ['jshint', 'custom', 'taskA', 'taskB']);
 };

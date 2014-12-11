@@ -81,7 +81,12 @@ just put code into your Gruntfile.js
 // First argument: the grunt instance. **required**.
 // Second argument: {Object} options, Optional. If your task in a custom dir, you should set it.
 require('grunt-task-loader')(grunt, {
-  // customTasksDir: '__CUSTOM_DIR__'
+  customTasksDir: '__CUSTOM_DIR__',
+  mapping: {
+    taskA: 'another_tasks_dirs/', // task in a dir. (load by grunt.loadTasks API)
+    taskB: 'ultraman/frog.js',    // task defined by a given file
+    cachebreaker: 'grunt-cache-breaker' // in node_modules/
+  }
 });
 ```
 

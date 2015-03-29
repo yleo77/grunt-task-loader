@@ -2,7 +2,9 @@
 module.exports = function(grunt) {
 
   require('./lib/index.js')(grunt, {
-    customTasksDir: 'test/',
+
+    // customTasksDir: 'test/', // string
+    customTasksDir: ['test/', 'another_custom/'],    // array
 
     mapping: {
       taskA: 'ultraman/',

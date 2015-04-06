@@ -1,32 +1,42 @@
-# grunt-task-loader  
+# grunt-task-loader
 
 [![Build Status](https://travis-ci.org/yleo77/grunt-task-loader.svg)](https://travis-ci.org/yleo77/grunt-task-loader)  [![NPM version](https://badge.fury.io/js/grunt-task-loader.svg)](http://badge.fury.io/js/grunt-task-loader)
 
-A task loader for **Speed up Load Task** and **Autoload Task** for Grunt. 
+**Speed up task loading** and **load npm grunt tasks automatically**
 
-In most case Gruntfile.js is looks like this.
+### Before:
 
-```javascript
-grunt.loadNpmTasks('grunt-contrib-uglify');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-cssmin');
-grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-contrib-...');
-grunt.loadNpmTasks('grunt-contrib-...');
-grunt.loadTasks('foo');
-grunt.loadTasks('bar');
-grunt.loadTasks('...');
-grunt.loadTasks('...');
-// and others tasks.
+```js
+// gruntfile.js
+module.exports = function(grunt) {
+
+  // configure tasks
+
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-...');
+  grunt.loadTasks('foo');
+  grunt.loadTasks('bar');
+  grunt.loadTasks('...');
+}
 ```
 
-When you run `grunt jshint` in cli, Grunt load **All Tasks** writen in Gruntfile.js, But in fact We don't need these tasks except *jshint* task.
+### After:
 
-The result is that it spent too much time at **Load Tasks** period.
+```js
+// gruntfile.js
+module.exports = function(grunt) {
 
-For example
+  require('grunt-task-loader')(grunt);
 
+  // configure tasks
+}
 ```
+
+### Sample time output before:
+
+```js
 // output by time-grunt
 Execution Time (2014-10-14 07:32:26 UTC)
 loading tasks  6.7s  ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇ 98%
@@ -34,30 +44,9 @@ reset           130ms  ▇▇ 2%
 Total 6.83s
 ```
 
-With **grunt-task-loader**, you can collapse that down to the following one-liner. it should looks like this:
+### Sample time output after:
 
-```javascript
-// Gruntfile.js
-module.exports = function(grunt) {
-    
-  require('grunt-task-loader')(grunt);
-  
-  grunt.initConfig({
-    //...
-  });
-  
-  // Remove grunt.loadNpmTasks and grunt.loadTasks calls.
-};
-```
-*Note: be sure to put it at the top position.*
-
-ALL DONE. 
-
-After requiring the plugin, it will autoload the task that you really use.
-
-Now you can check how long it takes for tasks. Far faster is the result, especially you have lots of grunt tasks.
-
-```
+```js
 Execution Time (2014-10-14 07:33:32 UTC)
 loading tasks  156ms  ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇ 52%
 loading reset   14ms  ▇▇▇ 5%
@@ -65,32 +54,95 @@ reset           130ms  ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
 Total 318ms
 ```
 
-
-
 ## Install
 
-```
+```bash
 npm install grunt-task-loader --save-dev
 ```
 
-## Usage 
+## Usage
 
-just put code into your Gruntfile.js
+#### Simple:
 
+```js
+// Must go at the top of your gruntfile, before the task config.
+require('grunt-task-loader')(grunt);
 ```
-// First argument: the grunt instance. **required**.
-// Second argument: {Object} options, Optional. If your task in a custom dir, you should set it.
+
+#### With Options:
+
+```js
 require('grunt-task-loader')(grunt, {
-  customTasksDir: '__CUSTOM_DIR__',   // or ['__CUSTOM_DIR__']
+  customTasksDir: '__CUSTOM_DIR__',   // or ['__CUSTOM_DIR__'],
   mapping: {
-    taskA: 'another_tasks_dirs/', // task in a dir. (load by grunt.loadTasks API)
-    taskB: 'ultraman/frog.js',    // task defined by a given file
-    cachebreaker: 'grunt-cache-breaker' // in node_modules/
+    taskA: 'another_tasks_dirs/', // custom task 'taskA' from custom tasks directory (load by grunt.loadTasks API)
+    taskB: 'ultraman/frog.js',    // custom task from file
+    cachebreaker: 'grunt-cache-breaker' // taskname mapping to package-name. will look in node_modules.
   }
 });
 ```
 
-If you wanna a live example, check **Gruntfile.js** out.
+## Options
+
+#### customTasksDir
+- Type: `string`,`array`
+- Default: `[]`
+
+#### mapping
+- Type: `object`
+- Default: known grunt tasks whose task name is different from their npm package name
+
+Custom mappings will extend default mappings, not override.
+
+##### mappingExample:
+
+```js
+require('grunt-task-loader')(grunt, {
+  mapping: {
+    express: 'grunt-express-server'
+  }
+});
+```
+
+#### convertCamelCase
+- Type: `boolean`
+- Default: `true`
+
+Automatically handles grunt tasks whose task names
+have been defined in `camelCase` while their package names are in `param-case`
+(this could also be handled per-task in custom mappings).
+Examples: [ngAnnotate](https://github.com/mzgol/grunt-ng-annotate), [includeSource](https://github.com/jwvdiermen/grunt-include-sourceincludeSource), etc.
+
+<br><br>
+See **Gruntfile.js** for more live examples.
+
+<br><br>
+### Help: task not found
+grunt-task-loader optimizes task loading by only loading the tasks needed for the current task list, instead of loading all of the 'grunt-' prefixed tasks in the package.json.
+To do this, it reads the task names from the grunt config.  Sometimes, grunt task authors give the grunt task a name that doesn't correspond to the npm package they publish the plugin under.
+Example:
+`grunt-express-server` is configured with:
+
+```js
+grunt.initConfig({
+  express: { // not express-server
+    // options
+  }
+});
+```
+
+So in this case, pass the name mapping in the options argument to grunt-task-loader:
+```js
+require('grunt-task-loader')(grunt, {
+  mapping: {
+    express: 'grunt-express-server'
+  }
+});
+```
+You can also submit a PR to add this name mapping to the plugin defaults.
+
+Package names that are simply prefixed with 'grunt-' or 'grunt-contrib-' are automatically handled, and so are mappings like `ngAnnotate` to `grunt-ng-annotate`, if `convertCamelCase` is `true`.
+
 
 ## License
 

@@ -90,9 +90,9 @@ require('grunt-task-loader')(grunt, {
 
 #### mapping
 - Type: `object`
-- Default: known grunt tasks whose task name is different from their npm package name
+- Default: `{}`
 
-Custom mappings will extend default mappings, not override.
+Key is the grunt task name (as referenced in grunt config for that task), and value is the name of that task's package as it can be found in the filesystem.
 
 ##### mappingExample:
 
